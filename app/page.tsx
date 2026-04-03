@@ -421,7 +421,7 @@ export default function DashboardPage() {
       {/* Bottom Row */}
       <div className="grid gap-4 lg:grid-cols-3">
         {/* Transactions Card */}
-        <Card className="glass glass-hover h-[320px] flex flex-col border-none relative overflow-hidden group">
+        <Card className="glass glass-hover h-[360px] flex flex-col border-none relative overflow-hidden group">
           <div className="absolute top-0 right-0 -m-6 w-32 h-32 bg-indigo-500/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
           <CardHeader className="flex flex-row items-center justify-between pb-4 relative z-10 px-6">
             <CardTitle className="text-sm font-bold text-slate-900 dark:text-zinc-50 tracking-tight">Recent Activity</CardTitle>
@@ -429,126 +429,139 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent className="overflow-y-auto pb-6 px-6 hide-scrollbar flex-1 relative z-10">
             <div className="space-y-4">
-              {recentTransactions.length > 0 ? recentTransactions.map((t) => {
+              {recentTransactions.length > 0 ? recentTransactions.map((t, idx) => {
                 const cat = categories.find(c => c.id === t.category);
+                const isIncome = t.type === 'income';
                 return (
-                  <div key={t.id} className="flex items-center justify-between group/row">
-                    <div className="flex items-center gap-3">
-                      <div 
-                        className="w-9 h-9 rounded-xl flex shrink-0 items-center justify-center text-[11px] text-white font-bold transition-transform duration-300 group-hover/row:scale-110 shadow-sm"
-                        style={{ backgroundColor: cat?.color || DEFAULT_COLOR }}
-                      >
-                        {(t.provider || t.title).substring(0,2).toUpperCase()}
+                  <div key={t.id} className="relative group/row">
+                    {idx !== 0 && <div className="absolute top-0 left-12 right-0 h-px bg-slate-200/5" />}
+                    <div className="flex items-center justify-between py-3 px-1 transition-all duration-300 group-hover/row:bg-white/5 rounded-xl">
+                      <div className="flex items-center gap-4">
+                        <div 
+                          className={`w-10 h-10 rounded-2xl flex shrink-0 items-center justify-center text-[12px] text-white font-bold transition-all duration-500 group-hover/row:scale-110 shadow-lg ${isIncome ? 'glow-green' : 'glow-red'}`}
+                          style={{ backgroundColor: cat?.color || DEFAULT_COLOR }}
+                        >
+                          {(t.provider || t.title).substring(0,2).toUpperCase()}
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-[13px] font-bold truncate text-slate-100 leading-tight">
+                            {t.provider || t.title}
+                          </span>
+                          <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mt-1">
+                            {format(new Date(t.date), "MMM dd")} • {cat?.name}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex flex-col min-w-0">
-                        <span className="text-[12px] font-bold truncate text-slate-800 dark:text-zinc-100 leading-tight">
-                          {t.provider || t.title}
+                      <div className="flex flex-col items-end">
+                        <span className={`text-[13px] font-black tabular-nums tracking-tight ${isIncome ? 'text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]' : 'text-rose-400 drop-shadow-[0_0_8px_rgba(251,113,133,0.5)]'}`}>
+                          {isIncome ? '+' : '−'}{formatCurrencyPair(t.amount).split(' ')[0]}
                         </span>
-                        <span className="text-[10px] text-slate-500 dark:text-zinc-500 font-medium">
-                          {format(new Date(t.date), "MMM dd")}
-                        </span>
+                        <span className="text-[9px] text-zinc-500 font-black uppercase tracking-[0.2em]">{t.type}</span>
                       </div>
-                    </div>
-                    <div className="flex flex-col items-end">
-                      <span className={`text-[12px] font-extrabold tabular-nums ${t.type === 'income' ? 'text-emerald-500' : 'text-slate-900 dark:text-zinc-100'}`}>
-                        {t.type === 'income' ? '+' : '−'}{formatCurrencyPair(t.amount).split(' ')[0]}
-                      </span>
-                      <span className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">{t.type}</span>
                     </div>
                   </div>
                 )
               }) : (
-                <div className="text-xs text-center text-slate-400 mt-10 font-bold uppercase tracking-widest opacity-40">No recent activity</div>
+                <div className="text-xs text-center text-slate-400 mt-10 font-bold uppercase tracking-widest opacity-40">No pulse detected</div>
               )}
             </div>
           </CardContent>
         </Card>
 
         {/* Categories Card */}
-        <Card className="glass glass-hover h-[320px] flex flex-col border-none relative overflow-hidden group">
+        <Card className="glass glass-hover h-[360px] flex flex-col border-none relative overflow-hidden group">
           <div className="absolute top-0 right-0 -m-6 w-32 h-32 bg-indigo-500/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
           <CardHeader className="flex flex-row items-center justify-between pb-4 relative z-10 px-6">
             <CardTitle className="text-sm font-bold text-slate-900 dark:text-zinc-50 tracking-tight">Spending Mix</CardTitle>
             <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest cursor-pointer hover:text-indigo-600 transition-colors">Details</span>
           </CardHeader>
           <CardContent className="pb-6 px-6 flex-1 flex flex-col overflow-hidden relative z-10">
-            <div className="w-full h-1.5 flex rounded-full overflow-hidden mb-8 bg-slate-100 dark:bg-white/5">
+            <div className="space-y-5 flex-1 overflow-y-auto hide-scrollbar px-1 mt-2">
               {typesData.length > 0 ? typesData.map((t, i) => (
-                <div key={i} className="h-full transition-all duration-1000" style={{ width: `${t.percentNum}%`, backgroundColor: t.color }}></div>
-              )) : (
-                <div className="bg-slate-200 w-full h-full"></div>
-              )}
-            </div>
-            <div className="space-y-4 flex-1 overflow-y-auto hide-scrollbar px-1">
-              {typesData.length > 0 ? typesData.map((t, i) => (
-                <div key={i} className="flex items-center justify-between text-[11px]">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: t.color }} />
-                    <span className="font-bold text-slate-700 dark:text-zinc-200 truncate max-w-[100px]">{t.name}</span>
+                <div key={i} className="space-y-2 group/bar">
+                  <div className="flex items-center justify-between text-[10px] font-extrabold uppercase tracking-widest">
+                    <div className="flex items-center gap-2 text-slate-200">
+                      <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: t.color, boxShadow: `0 0 8px ${t.color}` }} />
+                      {t.name}
+                    </div>
+                    <span className="text-zinc-500 tabular-nums">{t.percent}</span>
                   </div>
-                  <div className="flex gap-3 font-bold tabular-nums">
-                    <span className="text-slate-800 dark:text-zinc-100">{t.amountStr.split(' ')[0]}</span>
-                    <span className="text-slate-400 w-10 text-right opacity-60">({t.percent})</span>
+                  <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full rounded-full transition-all duration-1000 ease-out animate-in-fade" 
+                      style={{ 
+                        width: `${t.percentNum}%`, 
+                        backgroundColor: t.color,
+                        boxShadow: `0 0 10px ${t.color}66`
+                      }} 
+                    />
                   </div>
                 </div>
               )) : (
-                <div className="text-xs text-center text-slate-400 mt-10 font-bold uppercase tracking-widest opacity-40">No breakdown data</div>
+                <div className="text-xs text-center text-slate-400 mt-10 font-bold uppercase tracking-widest opacity-40">Zero spend detected</div>
               )}
             </div>
           </CardContent>
         </Card>
 
         {/* Budget Overview Card */}
-        <Card className="glass glass-hover h-[320px] flex flex-col border-none relative overflow-hidden group">
+        <Card className="glass glass-hover h-[360px] flex flex-col border-none relative overflow-hidden group">
           <div className="absolute top-0 right-0 -m-6 w-32 h-32 bg-indigo-500/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
           <CardHeader className="flex flex-row items-center justify-between pb-2 relative z-10 px-6">
-            <CardTitle className="text-sm font-bold text-slate-900 dark:text-zinc-50 tracking-tight">Budget Pulse</CardTitle>
-            <Target className="h-4 w-4 text-indigo-500 group-hover:rotate-12 transition-transform duration-500" />
+            <CardTitle className="text-sm font-bold text-white tracking-wide">Budget Pulse</CardTitle>
+            <Target className="h-4 w-4 text-indigo-400 group-hover:rotate-12 transition-transform duration-500" />
           </CardHeader>
 
           <CardContent className="pb-6 px-6 flex-1 flex flex-col relative z-10">
             {/* Summary Stats */}
-            <div className="grid grid-cols-2 gap-3 mb-6 mt-3">
+            <div className="grid grid-cols-2 gap-3 mb-6 mt-3 px-1">
               <div className="space-y-0.5">
-                <p className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Target</p>
-                <p className="text-sm font-extrabold text-slate-900 dark:text-zinc-100">₹{budgetData.totalBudget.toLocaleString()}</p>
+                <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Global Cap</p>
+                <p className="text-sm font-extrabold text-white">₹{budgetData.totalBudget.toLocaleString()}</p>
               </div>
               <div className="space-y-0.5 text-right">
-                <p className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Balance</p>
-                <p className={`text-sm font-extrabold ${budgetData.totalBudget - budgetData.totalSpent < 0 ? 'text-rose-500' : 'text-emerald-500'}`}>
+                <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Remainder</p>
+                <p className={`text-sm font-extrabold ${budgetData.totalBudget - budgetData.totalSpent < 0 ? 'text-rose-400' : 'text-emerald-400'}`}>
                   ₹{(budgetData.totalBudget - budgetData.totalSpent).toLocaleString()}
                 </p>
               </div>
             </div>
 
             {/* Category Progress */}
-            <div className="space-y-4 flex-1 overflow-y-auto hide-scrollbar min-h-0">
-              {budgetData.categoryBudgets.length > 0 ? budgetData.categoryBudgets.map((b, i) => (
-                <div key={i} className="space-y-2">
-                  <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-tight">
-                    <div className="flex items-center gap-1.5 text-slate-600 dark:text-zinc-400">
-                      <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: b.color }} />
-                      {b.name}
+            <div className="space-y-5 flex-1 overflow-y-auto hide-scrollbar min-h-0 px-1">
+              {budgetData.categoryBudgets.length > 0 ? budgetData.categoryBudgets.map((b, i) => {
+                const colors = b.status === 'over' ? { bar: 'from-rose-500 to-red-600', glow: 'rgba(239, 68, 68, 0.4)', text: 'text-rose-400' } : 
+                             b.status === 'warning' ? { bar: 'from-amber-400 to-orange-500', glow: 'rgba(245, 158, 11, 0.4)', text: 'text-amber-400' } : 
+                             { bar: 'from-emerald-400 to-teal-500', glow: 'rgba(16, 185, 129, 0.4)', text: 'text-emerald-400' };
+
+                return (
+                  <div key={i} className="space-y-2.5 group/pulse">
+                    <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest">
+                      <div className="flex items-center gap-1.5 text-zinc-100">
+                        <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: b.color, boxShadow: `0 0 8px ${b.color}` }} />
+                        {b.name}
+                      </div>
+                      <span className="text-zinc-500 tabular-nums font-extrabold">
+                        {b.progress.toFixed(0)}%
+                      </span>
                     </div>
-                    <span className="text-slate-400 dark:text-zinc-500 tabular-nums font-extrabold opacity-60">
-                      {b.progress.toFixed(0)}%
-                    </span>
+                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden relative">
+                      <div 
+                        className={`h-full rounded-full transition-all duration-1000 ease-out bg-gradient-to-r ${colors.bar} relative`}
+                        style={{ width: `${b.progress}%`, boxShadow: `0 0 12px ${colors.glow}` }}
+                      >
+                         {/* Glowing Indicator Dot */}
+                        {b.progress > 0 && (
+                          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-white shadow-[0_0_8px_#fff]" />
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div className="h-1.5 w-full bg-slate-100/50 dark:bg-white/5 rounded-full overflow-hidden">
-                    <div 
-                      className={`h-full rounded-full transition-all duration-1000 ease-out shadow-[0_0_8px_rgba(0,0,0,0.1)] ${
-                        b.status === 'over' ? 'bg-gradient-to-r from-rose-500 to-rose-400' : 
-                        b.status === 'warning' ? 'bg-gradient-to-r from-amber-500 to-amber-400' : 
-                        'bg-gradient-to-r from-emerald-500 to-emerald-400'
-                      }`}
-                      style={{ width: `${b.progress}%` }}
-                    />
-                  </div>
-                </div>
-              )) : (
+                );
+              }) : (
                 <div className="flex flex-col items-center justify-center h-full gap-2 opacity-40">
-                  <TrendingUp className="h-8 w-8 text-slate-400" />
-                  <p className="text-[10px] font-bold uppercase tracking-widest">No pulse detected</p>
+                  <TrendingUp className="h-8 w-8 text-zinc-600" />
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">No pulse detected</p>
                 </div>
               )}
             </div>
