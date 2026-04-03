@@ -9,6 +9,21 @@ This application helps users manage income, expenses, and visualize financial da
 
 👉 https:finstack.vercel.app
 
+## 📸 Project Screenshots
+
+<p align="center">
+  <img src="./Screenshot%202026-04-03%20175147.png" width="45%"/>
+  <img src="./Screenshot%202026-04-03%20175117.png" width="45%"/>
+  <br/>
+  <img src="./Screenshot%202026-04-03%20174942.png" width="45%"/>
+  <img src="./Screenshot%202026-04-03%20174912.png" width="45%"/>
+  <br/>
+  <img src="./Screenshot%202026-04-03%20174844.png" width="45%"/>
+  <img src="./Screenshot%202026-04-03%20174815.png" width="45%"/>
+  <br/>
+  <img src="./Screenshot%202026-04-03%20174736.png" width="45%"/>
+</p>
+
 ## ✨ Features
 
 * 📊 **Monthly Cash Flow Tracking**
