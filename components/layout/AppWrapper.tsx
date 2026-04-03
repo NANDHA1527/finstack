@@ -16,11 +16,15 @@ export default function AppWrapper({ children }: { children: React.ReactNode }) 
 
   // Otherwise, render full standard dashboard hierarchy
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-black">
+    <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-zinc-950 relative">
+      {/* Global Background Layers */}
+      <div className="absolute inset-0 mesh-gradient opacity-100 pointer-events-none z-0" />
+      <div className="absolute inset-0 grain pointer-events-none z-0" />
+
       <Sidebar />
-      <div className="flex flex-1 flex-col overflow-hidden">
+      <div className="flex flex-1 flex-col overflow-hidden relative z-10">
         <Header />
-        <main className="flex-1 overflow-y-auto px-6 py-8 sm:px-8">
+        <main className="flex-1 overflow-y-auto px-6 py-8 sm:px-8 animate-in-fade">
           {children}
         </main>
       </div>

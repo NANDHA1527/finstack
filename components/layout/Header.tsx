@@ -18,7 +18,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className="flex h-16 shrink-0 items-center justify-between border-b border-slate-200 bg-white px-6 sm:px-8 dark:border-zinc-800 dark:bg-zinc-950">
+    <header className="flex h-16 shrink-0 items-center justify-between border-b border-slate-200/60 bg-white/70 px-6 sm:px-8 dark:border-zinc-800/60 dark:bg-zinc-950/40 backdrop-blur-3xl relative z-30">
       {/* Brand & Mobile Menu */}
       <div className="flex items-center">
         <button className="mr-4 block md:hidden text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-zinc-50">

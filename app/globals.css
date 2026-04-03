@@ -14,19 +14,51 @@
   --font-mono: var(--font-geist-mono);
 }
 
-.dark {
-  --background: #09090b; /* zinc-950 */
-  --foreground: #fafafa; /* zinc-50 */
-}
-
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    @apply h-full antialiased selection:bg-indigo-500/30 selection:text-indigo-900 dark:selection:text-indigo-100;
+  }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .mesh-gradient {
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.05) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+  }
+
+  .grain {
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    filter: contrast(150%) brightness(100%);
+    opacity: 0.03;
+  }
+
+  .glass {
+    @apply bg-white/70 dark:bg-zinc-950/60 backdrop-blur-xl border border-slate-200/60 dark:border-zinc-800/60 shadow-sm transition-all duration-300;
+  }
+
+  .glass-hover {
+    @apply hover:scale-[1.015] hover:shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_8px_32px_rgba(0,0,0,0.4)] hover:border-slate-300/60 dark:hover:border-white/10;
+  }
+
+  .animate-in-fade {
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
