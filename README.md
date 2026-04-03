@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💰 FinStack – Modern Finance Dashboard
 
-## Getting Started
+A modern, responsive **Finance Dashboard** built with **Next.js, Tailwind CSS, and TypeScript**.
+This application helps users manage income, expenses, and visualize financial data with interactive charts and a clean UI.
 
-First, run the development server:
+---
+
+## 🚀 Live Demo
+
+👉 https:finstack.vercel.app
+
+## ✨ Features
+
+* 📊 **Monthly Cash Flow Tracking**
+* 💰 **Income & Expense Management**
+* 📁 **Custom Categories (Food, Travel, etc.)**
+* 🏦 **Multiple Account Support**
+* 📈 **Interactive Charts & Analytics**
+* 🔐 **User Authentication**
+* 🌐 **Multi-Currency Support (INR / USD)**
+* ⚡ **Modern UI with Glow Effects**
+* 📱 **Responsive Design (Mobile + Desktop)**
+
+---
+
+## 🛠️ Tech Stack
+
+* **Framework:** Next.js (React)
+* **Language:** TypeScript
+* **Styling:** Tailwind CSS
+* **Charts:** Recharts / Chart.js
+* **State Management:** React Hooks / Context API
+* **Deployment:** Vercel
+
+---
+
+## 📂 Project Structure
+
+```
+app/         → Pages & routing
+components/  → Reusable UI components
+lib/         → Business logic & utilities
+types/       → TypeScript definitions
+public/      → Static assets (images, icons)
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/YOUR_USERNAME/finstack.git
+```
+
+2. **Navigate into the project**
+
+```bash
+cd finstack
+```
+
+3. **Install dependencies**
+
+```bash
+npm install
+```
+
+4. **Run development server**
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open browser:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🌟 Future Enhancements
 
-To learn more about Next.js, take a look at the following resources:
+* 📊 AI-based financial insights
+* 📤 Export reports (PDF / Excel)
+* 🔔 Notifications & reminders
+* 📱 Mobile app version
+* 🔗 Bank API integration
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🤝 Contributing
 
-## Deploy on Vercel
+Contributions are welcome!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push and create a Pull Request
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 👨‍💻 Author
+
+**Nandha Kumar**
+🎓 B.Tech CSE (Business Systems)
+💻 Aspiring Web Developer
+
+---
+
+## ⭐ Support
+
+If you like this project, please ⭐ the repository and share it!
