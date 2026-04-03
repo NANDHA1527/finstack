@@ -5,11 +5,11 @@ import { v4 as uuidv4 } from "uuid";
 import { Transaction, Category, AppState, Budget } from "../types";
 
 const defaultCategories: Category[] = [
-  { id: "1", name: "Salary", type: "income", color: "bg-emerald-500", icon: "briefcase" },
-  { id: "2", name: "Food", type: "expense", color: "bg-pink-400", icon: "utensils" },
-  { id: "3", name: "Transport", type: "expense", color: "bg-sky-400", icon: "car" },
-  { id: "4", name: "Utilities", type: "expense", color: "bg-amber-400", icon: "zap" },
-  { id: "5", name: "Entertainment", type: "expense", color: "bg-indigo-500", icon: "film" },
+  { id: "1", name: "Salary", type: "income", color: "#22c55e", icon: "briefcase" },
+  { id: "2", name: "Food", type: "expense", color: "#ef4444", icon: "utensils" },
+  { id: "3", name: "Transport", type: "expense", color: "#3b82f6", icon: "car" },
+  { id: "4", name: "Utilities", type: "expense", color: "#f59e0b", icon: "zap" },
+  { id: "5", name: "Entertainment", type: "expense", color: "#8b5cf6", icon: "film" },
 ];
 
 const defaultTransactions: Transaction[] = [

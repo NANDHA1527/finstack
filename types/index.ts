@@ -4,7 +4,7 @@ export interface Category {
   id: string;
   name: string;
   type: TransactionType;
-  color?: string;
+  color: string;
   icon?: string;
 }
 

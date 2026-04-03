@@ -51,7 +51,7 @@ function BudgetCard({
   onSetTarget,
 }: {
   insight: {
-    category: { id: string; name: string; color?: string; icon?: string };
+    category: { id: string; name: string; color: string; icon?: string };
     budgetId?: string;
     target: number;
     totalSpent: number;
@@ -74,12 +74,18 @@ function BudgetCard({
   return (
     <div className="glass glass-hover p-6 border-none group relative overflow-hidden flex flex-col min-h-[220px]">
       {/* Ambient glow on hover */}
-      <div className={`absolute top-0 right-0 -m-8 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none ${category.color || 'bg-indigo-500'}`} />
+      <div 
+        className="absolute top-0 right-0 -m-8 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none" 
+        style={{ backgroundColor: category.color || '#3b82f6' }}
+      />
 
       {/* Header row */}
       <div className="flex items-start justify-between gap-4 relative z-10">
         <div className="flex items-center gap-4">
-          <div className={`flex items-center justify-center w-12 h-12 rounded-2xl ${category.color || 'bg-indigo-500'} bg-opacity-20 border border-white/10 shadow-lg shadow-black/5 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}>
+          <div 
+            className="flex items-center justify-center w-12 h-12 rounded-2xl bg-opacity-20 border border-white/10 shadow-lg shadow-black/5 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3"
+            style={{ backgroundColor: category.color || '#3b82f6' }}
+          >
             <IconComp className="h-6 w-6 text-white" />
           </div>
           <div>
@@ -169,6 +175,7 @@ function BudgetCard({
 // ─── Page ────────────────────────────────────────────────────────────────────
 export default function BudgetPage() {
   const { budgets, transactions, categories, setBudget, deleteBudget } = useAppContext();
+  const DEFAULT_COLOR = "#3b82f6";
   const [isEditing, setIsEditing]         = useState(false);
   const [activeCategoryId, setActiveCategoryId] = useState("");
   const [targetAmount, setTargetAmount]   = useState("");

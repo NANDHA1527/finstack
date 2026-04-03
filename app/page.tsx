@@ -15,6 +15,7 @@ import {
 
 export default function DashboardPage() {
   const { transactions, categories, budgets } = useAppContext();
+  const DEFAULT_COLOR = "#3b82f6";
 
   // Dynamic Base Totals
   const { totalIncome, totalExpense, balance } = useMemo(() => {
@@ -86,7 +87,7 @@ export default function DashboardPage() {
         amountRaw: amount,
         percentNum: totalExpense > 0 ? (amount / totalExpense) * 100 : 0,
         percent: `${(totalExpense > 0 ? (amount / totalExpense) * 100 : 0).toFixed(2)}%`,
-        color: cat?.color || "bg-slate-300"
+        color: cat?.color || DEFAULT_COLOR
       };
     }).sort((a, b) => b.amountRaw - a.amountRaw);
   }, [transactions, categories, totalExpense]);
@@ -151,7 +152,7 @@ export default function DashboardPage() {
         limit: b.amount,
         progress: Math.min(progress, 100),
         status: progress > 100 ? 'over' : progress > 80 ? 'warning' : 'safe',
-        color: cat?.color || 'bg-indigo-500'
+        color: cat?.color || DEFAULT_COLOR
       };
     }).sort((a, b) => b.spent - a.spent).slice(0, 4);
 
@@ -433,7 +434,10 @@ export default function DashboardPage() {
                 return (
                   <div key={t.id} className="flex items-center justify-between group/row">
                     <div className="flex items-center gap-3">
-                      <div className={`w-9 h-9 rounded-xl flex shrink-0 items-center justify-center text-[11px] text-white font-bold transition-transform duration-300 group-hover/row:scale-110 shadow-sm ${cat?.color || 'bg-slate-400'}`}>
+                      <div 
+                        className="w-9 h-9 rounded-xl flex shrink-0 items-center justify-center text-[11px] text-white font-bold transition-transform duration-300 group-hover/row:scale-110 shadow-sm"
+                        style={{ backgroundColor: cat?.color || DEFAULT_COLOR }}
+                      >
                         {(t.provider || t.title).substring(0,2).toUpperCase()}
                       </div>
                       <div className="flex flex-col min-w-0">
@@ -470,7 +474,7 @@ export default function DashboardPage() {
           <CardContent className="pb-6 px-6 flex-1 flex flex-col overflow-hidden relative z-10">
             <div className="w-full h-1.5 flex rounded-full overflow-hidden mb-8 bg-slate-100 dark:bg-white/5">
               {typesData.length > 0 ? typesData.map((t, i) => (
-                <div key={i} className={`${t.color} h-full transition-all duration-1000`} style={{ width: `${t.percentNum}%` }}></div>
+                <div key={i} className="h-full transition-all duration-1000" style={{ width: `${t.percentNum}%`, backgroundColor: t.color }}></div>
               )) : (
                 <div className="bg-slate-200 w-full h-full"></div>
               )}
@@ -479,7 +483,7 @@ export default function DashboardPage() {
               {typesData.length > 0 ? typesData.map((t, i) => (
                 <div key={i} className="flex items-center justify-between text-[11px]">
                   <div className="flex items-center gap-2.5">
-                    <div className={`w-2 h-2 rounded-full ${t.color.replace('bg-', 'bg-opacity-100 bg-')}`} />
+                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: t.color }} />
                     <span className="font-bold text-slate-700 dark:text-zinc-200 truncate max-w-[100px]">{t.name}</span>
                   </div>
                   <div className="flex gap-3 font-bold tabular-nums">
@@ -523,7 +527,7 @@ export default function DashboardPage() {
                 <div key={i} className="space-y-2">
                   <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-tight">
                     <div className="flex items-center gap-1.5 text-slate-600 dark:text-zinc-400">
-                      <div className={`w-1.5 h-1.5 rounded-full ${b.color.replace('bg-', 'bg-opacity-100 bg-')}`} />
+                      <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: b.color }} />
                       {b.name}
                     </div>
                     <span className="text-slate-400 dark:text-zinc-500 tabular-nums font-extrabold opacity-60">

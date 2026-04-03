@@ -48,7 +48,10 @@ function TransactionRow({
     <div className="group flex items-center gap-3 sm:gap-4 rounded-2xl border border-slate-200/60 dark:border-white/5 bg-white/70 dark:bg-white/5 backdrop-blur-xl px-4 py-4 transition-all duration-300 hover:scale-[1.01] hover:border-slate-300 dark:hover:border-white/10 hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)]">
       
       {/* Avatar */}
-      <div className={`flex-shrink-0 flex items-center justify-center w-11 h-11 rounded-2xl text-white text-[11px] font-bold shadow-lg shadow-black/5 ${catColor} transition-transform duration-300 group-hover:scale-110`}>
+      <div 
+        className="flex-shrink-0 flex items-center justify-center w-11 h-11 rounded-2xl text-white text-[11px] font-bold shadow-lg shadow-black/5 transition-transform duration-300 group-hover:scale-110"
+        style={{ backgroundColor: catColor }}
+      >
         {(t.provider || t.title).substring(0, 2).toUpperCase()}
       </div>
 
@@ -56,7 +59,10 @@ function TransactionRow({
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <p className="text-[13px] font-bold text-slate-900 dark:text-zinc-50 truncate leading-tight">{t.title}</p>
-          <span className={`inline-flex sm:hidden items-center px-1.5 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest ${catColor} bg-opacity-10 text-slate-700 dark:text-zinc-300 border border-black/5 dark:border-white/5`}>
+          <span 
+            className="inline-flex sm:hidden items-center px-1.5 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest text-slate-700 dark:text-zinc-300 border"
+            style={{ backgroundColor: `${catColor}1a`, borderColor: `${catColor}33` }}
+          >
             {catName}
           </span>
         </div>
@@ -69,7 +75,10 @@ function TransactionRow({
 
       {/* Category desktop */}
       <div className="hidden sm:flex flex-col items-end mr-4">
-        <span className={`inline-flex items-center px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest ${catColor} bg-opacity-10 text-slate-800 dark:text-zinc-200 border border-black/5 dark:border-white/10`}>
+        <span 
+          className="inline-flex items-center px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest text-slate-800 dark:text-zinc-200 border"
+          style={{ backgroundColor: `${catColor}1a`, borderColor: `${catColor}33` }}
+        >
           {catName}
         </span>
       </div>
@@ -104,6 +113,7 @@ function TransactionRow({
 // ─── Page ────────────────────────────────────────────────────────────────────
 export default function TransactionsPage() {
   const { transactions, categories, addTransaction, editTransaction, deleteTransaction } = useAppContext();
+  const DEFAULT_COLOR = "#3b82f6";
 
   const [isAdding, setIsAdding]     = useState(false);
   const [editingId, setEditingId]   = useState<string | null>(null);
@@ -120,7 +130,7 @@ export default function TransactionsPage() {
   const [dateRange, setDateRange]           = useState<"all" | "7d" | "30d">("all");
 
   const getCategoryName  = (id: string) => categories.find((c) => c.id === id)?.name  || "Unknown";
-  const getCategoryColor = (id: string) => categories.find((c) => c.id === id)?.color || "bg-slate-400";
+  const getCategoryColor = (id: string) => categories.find((c) => c.id === id)?.color || DEFAULT_COLOR;
 
   const openAddForm = () => {
     setIsAdding(true); setEditingId(null);
